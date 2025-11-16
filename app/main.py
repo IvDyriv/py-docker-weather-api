@@ -1,6 +1,9 @@
 import os
 import requests
 
+BASE_URL = "http://api.weatherapi.com/v1/current.json"
+CITY = "Paris"
+
 
 def get_weather() -> None:
     api_key = os.getenv("API_KEY")
@@ -8,7 +11,7 @@ def get_weather() -> None:
         print("API_KEY is missing. Please set it as an environment variable.")
         return
 
-    url = f"http://api.weatherapi.com/v1/current.json?q=Paris&key={api_key}"
+    url = f"{BASE_URL}?q={CITY}&key={api_key}"
 
     try:
         response = requests.get(url)
@@ -16,7 +19,7 @@ def get_weather() -> None:
         data = response.json()
         temp = data["current"]["temp_c"]
         condition = data["current"]["condition"]["text"]
-        print(f"Weather in Paris: {temp}°C, {condition}")
+        print(f"Weather in {CITY}: {temp}°C, {condition}")
     except requests.RequestException as e:
         print(f"Error fetching weather data: {e}")
 
